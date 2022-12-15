@@ -26,9 +26,8 @@ const App = () => {
   };
 
   const deleteItem = (id: number) => {
-    const newList = [...list];
-
-    const newListFilter = newList.filter((item) => item.id !== id);
+    
+    const newListFilter = [...list].filter((item) => item.id !== id);
 
     setList(newListFilter);
 
