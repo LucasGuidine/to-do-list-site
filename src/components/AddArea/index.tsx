@@ -9,7 +9,6 @@ export const AddArea = ({ onEnter }: Props) => {
   const [inputText, setInputText] = useState("");
 
   const handleKeyUp = (e: KeyboardEvent) => {
-    console.log(e);
     if (e.key === "Enter" && inputText !== "") {
       onEnter(inputText);
       setInputText("");
