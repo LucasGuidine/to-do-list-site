@@ -7,13 +7,13 @@ import { AddArea } from "./components/AddArea";
 const App = () => {
   const [list, setList] = useState<Item[]>([]);
 
-  // useEffect(() => {
-  //   try {
-  //     var storedArray = localStorage.getItem("@List");
-  //     var ourArray = JSON.parse(storedArray as string);
-  //     setList(ourArray);
-  //   } catch (error) {}
-  // }, []);
+  useEffect(() => {
+    try {
+      var storedArray = localStorage.getItem("@List");
+      var ourArray = JSON.parse(storedArray as string);
+      setList(ourArray);
+    } catch (error) {}
+  }, []);
 
   const UpdateList = (id: number, done: boolean) => {
     let newList = [...list];
@@ -28,12 +28,11 @@ const App = () => {
   const deleteItem = (id: number) => {
     const newList = [...list];
 
-    console.log("newList[id]:", newList[id]);
-    delete newList[id];
-    
-    setList(newList);
-    
-    localStorage.setItem("@List", JSON.stringify(newList));
+    const newListFilter = newList.filter((item) => item.id !== id);
+
+    setList(newListFilter);
+
+    localStorage.setItem("@List", JSON.stringify(newListFilter));
   };
 
   const handleAddTask = (taskName: string) => {
