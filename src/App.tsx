@@ -1,15 +1,19 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import * as C from "./App.styles";
 import { Item } from "./types/Item";
 import { ListItem } from "./components/ListItem";
 import { AddArea } from "./components/AddArea";
 
 const App = () => {
-  const [list, setList] = useState<Item[]>([
-    { id: 1, name: "Comprar pão na padaria", done: false },
-    { id: 2, name: "Comprar bolo na padaria", done: false },
-    { id: 3, name: "Ver a série wandinha na Netflix", done: false },
-  ]);
+  const [list, setList] = useState<Item[]>([]);
+
+  useEffect(() => {
+    try {
+      var storedArray = localStorage.getItem("@List");
+      var ourArray = JSON.parse(storedArray as string);
+      setList(ourArray);
+    } catch (error) {}
+  }, []);
 
   const UpdateList = (id: number, done: boolean) => {
     let newList = [...list];
@@ -21,14 +25,26 @@ const App = () => {
     setList(newList);
   };
 
+  const deleteItem = (id: number) => {
+    
+    const newListFilter = [...list].filter((item) => item.id !== id);
+
+    setList(newListFilter);
+
+    localStorage.setItem("@List", JSON.stringify(newListFilter));
+  };
+
   const handleAddTask = (taskName: string) => {
-    let newList = [...list];
+    const newList = [...list];
     newList.push({
-      id: list.length + 1,
+      id: Math.floor(Math.random() * 10000),
       name: taskName,
       done: false,
     });
-    setList(newList);
+    localStorage.setItem("@List", JSON.stringify(newList));
+    var storedArray = localStorage.getItem("@List");
+    var ourArray = JSON.parse(storedArray as string);
+    setList(ourArray);
   };
 
   return (
@@ -37,7 +53,12 @@ const App = () => {
         <C.Header>Lista de tarefas</C.Header>
         <AddArea onEnter={handleAddTask} />
         {list.map((item, index) => (
-          <ListItem updateList={UpdateList} item={item} key={index} />
+          <ListItem
+            deleteItem={deleteItem}
+            updateList={UpdateList}
+            item={item}
+            key={index}
+          />
         ))}
       </C.Area>
     </C.Container>

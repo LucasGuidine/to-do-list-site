@@ -13,6 +13,7 @@ export const Container = styled.div(
     border-radius: 10px;
     margin-bottom: 10px;
     align-items: center;
+    position: relative;
   
     label {
       color: #ccc;
@@ -26,3 +27,10 @@ export const Container = styled.div(
     }
     `
 );
+
+export const IconConatiner = styled.div`
+  position: absolute;
+  right: 0;
+  margin-right: 20px;
+  cursor: pointer;
+`;
