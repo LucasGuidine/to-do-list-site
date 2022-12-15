@@ -11,8 +11,10 @@ const App = () => {
     try {
       var storedArray = localStorage.getItem("@List");
       var ourArray = JSON.parse(storedArray as string);
-      setList(ourArray);
-    } catch (error) {}
+      if (ourArray) {
+        setList(ourArray);
+      }
+    } catch (error) { }
   }, []);
 
   const UpdateList = (id: number, done: boolean) => {
@@ -26,7 +28,7 @@ const App = () => {
   };
 
   const deleteItem = (id: number) => {
-    
+
     const newListFilter = [...list].filter((item) => item.id !== id);
 
     setList(newListFilter);
