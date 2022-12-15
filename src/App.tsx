@@ -35,10 +35,10 @@ const App = () => {
   };
 
   const handleAddTask = (taskName: string) => {
-    console.log(list.length);
+    console.log(list[0]);
     const newList = [...list];
     newList.push({
-      id: Math.floor(Math.random() * 10),
+      id: Math.floor(Math.random() * 10000),
       name: taskName,
       done: false,
     });
